@@ -3,7 +3,7 @@
 using namespace std;
 
 const int maxKamar=5;
-const int maxAntrian=4;
+const int maxAntrian=5;
 struct Kamar{
     int no ; 
     string nama_pelanggan;
@@ -13,7 +13,6 @@ struct Kamar{
 struct Pesan{
 	int awal, akhir;
     string data[maxAntrian];
-    int nomor[maxAntrian];
     int umur[maxAntrian];
     int totalAntri=0;
     Kamar dataKamar[maxKamar];
@@ -24,25 +23,24 @@ struct Baru{
     string data[maxAntrian];
 }pelangganBaru;
 
-bool penuh;
-bool kosong;
+bool cek;
 
 bool DataPenuh(){
    if (pesan.akhir==maxAntrian-1){
-      penuh= true;
+      cek= true;
    }else {
-penuh= false;
+        cek= false;
    }
-   return (penuh);
+   return (cek);
 }
 
 bool DataKosong(){
    if (pesan.akhir==-1){
-      kosong= true;
+      cek= true;
    }else {
-   kosong= false;
+        cek= false;
    }
-   return (kosong);
+   return (cek);
 }
 
 bool CekKamar()
@@ -132,7 +130,7 @@ void AntriPelanggan()
         {
             pesan.akhir++;
             pesan.totalAntri++;
-            pesan.nomor[pesan.akhir]=pesan.totalAntri;
+            //pesan.nomor[pesan.akhir]=pesan.totalAntri;
             cout<<"Masukkan Nama : ";
             cin>>nama;
             pesan.data[pesan.akhir]=nama;
@@ -150,24 +148,24 @@ void AntriPelanggan()
         }else{
             cout<<"kamar penuh!";
         }
-        }else {
-            cout << "Antrean penuh!";
+    }else {
+        cout << "Antrean Pelanggan sudah penuh!";
     };
 }
 
 void KamarSiap()
 {
     if (!DataKosong()){
-        cout<<"Panggilan Nomor : ";cout<<pesan.nomor[pesan.awal+1];
-        cout<<"\nAtas nama : ";cout<<pesan.data[pesan.awal+1]<<endl;
+        //cout<<"Panggilan nomor ke - ";cout<<pesan.nomor[pesan.awal+1];
+        cout<<"\nKamar untuk pelanggan dengan nama"<<pesan.data[pesan.awal+1]<<" sudah disiapkan";
         for (int i=1;i<=pesan.akhir+1;i++){
             pesan.data[i-1]=pesan.data[i];
-            pesan.nomor[i-1]=pesan.nomor[i];
+            //pesan.nomor[i-1]=pesan.nomor[i];
             pesan.umur[i-1]=pesan.umur[i];
         }
             pesan.akhir--;
     }else {
-        cout << "Antrian kosong";
+        cout << "Belum ada pelanggan";
     }
 }
 
@@ -192,13 +190,13 @@ int main() {
     int pil;
     do {
         cout << "\nPilihan!"<<endl;
-        cout << "1. Antrikan Pelanggan"<<endl;
+        cout << "1. Masukkan Pelanggan dalam list"<<endl;
         cout << "2. Kamar siap"<<endl;
-        cout << "3. Lihat Jumlah Antrian"<<endl;
+        cout << "3. Jumlah pelanggan yang dilayani"<<endl;
         cout << "4. Cek Kamar Pelanggan"<<endl;
         cout << "5. Sorting umur pelanggan"<<endl;
         cout << "6. Info Pelanggan terbaru"<<endl;
-        cout << "7. Tutup Antrian"<<endl; 
+        cout << "7. Tutup Aplikasi"<<endl; 
         cout << "Silahkah Pilih : "; cin>>pil;
         switch (pil){
             case 1 :
@@ -208,8 +206,7 @@ int main() {
                 KamarSiap();
                 break;  
             case 3 :
-                //cout<<"Jml Antrian tersisa: ";cout<<pesan.akhir+1;
-                cout<<"Jml Antrian tersisa: ";cout<<*jmlAntrian+1;
+                cout<<"Jml Pelanggan yang belum dilayani: ";cout<<*jmlAntrian+1;
                 break;
             case 4:
                 CekKamarPelanggan();
